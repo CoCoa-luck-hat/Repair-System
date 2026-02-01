@@ -4,6 +4,7 @@ const { LoginValidator,RegisterValidator} = require("../middleware/validator")
 const { VarifyToken } = require("../middleware/varifytoken")
 const { pool } = require("../database/mysql")
 const { validationResult } = require("express-validator")
+const jwt = require("jsonwebtoken")
 
 router.post("/register" ,RegisterValidator,async(req,res)=>{
     const Validator_error = validationResult(req)
@@ -31,6 +32,58 @@ router.post("/register" ,RegisterValidator,async(req,res)=>{
             message:"เกิดข้อผิดพลาดบางอย่างจากเซิฟเวอร์"
         })
     }
+})
+
+router.post("/login",LoginValidator,async (req,res) => {
+    const Validator_error = validationResult(req)
+    if(!Validator_error.isEmpty()){
+        return res.status(400).json({
+            Validator_error:Validator_error.array()
+        })
+    }else{
+        try {
+            const { email,password } = req.body()
+            const [row] = await pool.execute("SELECT * FROM `users` WHERE email = ? AND password = ?",[email,password])
+            if(row.length >= 1){
+                return res.status(404).json({
+                    message:"อีเมลหรือรหัสผ่านผิด"
+                })
+            }else{
+                const token = jwt.sign({user_id:row.user_id,email:row.email,role:row.role},process.env.TOKEN_KEY,{expiresIn:"1h"})
+                return res.status(200).json({
+                    token:token,
+                    user:row[0]
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({
+                message:"เกิดข้อผิดพลาดบางอย่างจากเซิฟเวอร์"
+            })
+        }
+    }
+})
+
+router.get("/profile",VarifyToken,async (req,res) => {
+        try {
+            const {email} = req.user
+            const [row] = await pool.execute("SELECT * FROM `users` WHERE email = ?",[email])
+            if(row.length >= 1){
+                return res.status(200).json({
+                    user:row[0],
+                    token:req.token 
+                })
+            }else{
+                return res.status(404).json({
+                    message:"กรุณาเข้าสู่ระบบใหม่"
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({
+                message:"เกิดข้อผิดพลาดบางอย่างจากเซิฟเวอร์"
+            })
+        }
 })
 
 module.exports = router

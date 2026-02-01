@@ -12,5 +12,5 @@ app.listen(process.env.PORT, ()=>{
     console.log("Server is runing ",process.env.PORT)
 })
 
-
+readdirSync('./router').map((r)=>app.use("/api",require(`./router/${r}`)))
 
