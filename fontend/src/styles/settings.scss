@@ -8,3 +8,13 @@
 // @use 'vuetify/settings' with (
 //   $color-pack: false
 // );
+
+@font-face {
+    font-family: 'Kanit';
+    src: url(./font/Kanit-Regular.ttf);
+    font-style: normal;
+}
+
+* {
+    font-family: 'Kanit', sans-serif !important;
+}

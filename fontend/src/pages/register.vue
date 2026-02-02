@@ -30,13 +30,15 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useAppStore } from '@/stores/app';
 import { useToastStore } from '@/stores/toast';
 import { reactive, ref } from 'vue';
 
 
 definePage({
-  name: 'register'
+  name: 'register',
+  layout: 'default'
 })
 
 const FormVail = ref()
@@ -58,6 +60,8 @@ const SubmitForm = async () => {
   } else {
     try {
       const response  = await AppStore.Register(ValueForm)
+      ToastStore.ToastAdd(response.message,'success')
+      router.push({name:'login'})
     } catch (error) {
       if(error.response?.data?.Validator_error){
         error.response.data.Validator_error.map((e)=>ToastStore.ToastAdd(e.msg,'error'))

@@ -33,4 +33,24 @@ router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
 
+import { useAppStore } from '@/stores/app'
+router.beforeEach((to, from, next) => {
+  const appStore = useAppStore()
+
+  // ตรวจสอบว่าหน้านี้ต้องการ authentication หรือไม่
+  if (to.meta.requiresAuth) {
+    const token = localStorage.getItem('token')
+
+    if (!token) {
+      // ถ้าไม่มี token ให้ redirect ไป login
+      next({ name: 'login' })
+    } else {
+      // ถ้ามี token ให้ผ่านไปได้
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 export default router

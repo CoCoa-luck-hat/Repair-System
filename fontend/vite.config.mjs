@@ -16,7 +16,10 @@ import { fileURLToPath, URL } from 'node:url'
 export default defineConfig({
   plugins: [
     VueRouter(),
-    Layouts(),
+    Layouts({
+      layoutsDirs: 'src/layouts',
+      defaultLayout: 'default'
+    }),
     Vue({
       template: { transformAssetUrls },
     }),

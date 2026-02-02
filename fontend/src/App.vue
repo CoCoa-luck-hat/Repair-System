@@ -9,3 +9,4 @@
 import Toast from './components/toast.vue';
 
 </script>
+ 
