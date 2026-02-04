@@ -1,29 +1,49 @@
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from 'jwt-decode'
 
-const getDecodedToken = ()=>{
-    const token = localStorage('token')
-    if(!token){
-        return false
-    }else{
-        try {
-            const decode = jwtDecode(token)
-        } catch (error) {
-            return null   
-        }
+/**
+ * ตัวอย่างการใช้งาน jwt-decode
+ */
+
+// ฟังก์ชันสำหรับดึงข้อมูลจาก token
+export function getUserFromToken(token) {
+    try {
+        const decoded = jwtDecode(token)
+        return decoded
+    } catch (error) {
+        console.error('Token ไม่ถูกต้อง:', error)
+        return null
     }
 }
 
-const isTokenExpired = ()=>{
-    const decode = getDecodedToken()
-    if(!decode){
-        return true
-    }else{
-        const currentTime = Date.now() / 1000
-        return decode.exp > currentTime
+// ฟังก์ชันตรวจสอบว่า token หมดอายุหรือยัง
+export function isTokenExpired(token) {
+    try {
+        const decoded = jwtDecode(token)
+        const currentTime = Date.now() / 1000 // แปลงเป็นวินาที
+
+        // ถ้า exp (expiration time) น้อยกว่าเวลาปัจจุบัน = หมดอายุ
+        return decoded.exp < currentTime
+    } catch (error) {
+        return true // ถ้า decode ไม่ได้ ถือว่าหมดอายุ
     }
 }
 
-const getUserFromToken = ()=>{
-    const decoded = getDecodedToken()
-    return decoded || null
+// ฟังก์ชันดึง userId จาก token
+export function getUserId(token) {
+    try {
+        const decoded = jwtDecode(token)
+        return decoded.userId || decoded.id || decoded.sub
+    } catch (error) {
+        return null
+    }
+}
+
+// ฟังก์ชันดึง role จาก token
+export function getUserRole(token) {
+    try {
+        const decoded = jwtDecode(token)
+        return decoded.role || decoded.roles
+    } catch (error) {
+        return null
+    }
 }

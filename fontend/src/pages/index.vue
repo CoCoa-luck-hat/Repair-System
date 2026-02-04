@@ -26,6 +26,7 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { useAppStore } from '@/stores/app';
 import { useToastStore } from '@/stores/toast';
 import { reactive, ref } from 'vue';
@@ -52,9 +53,18 @@ const SubmitForm = async () => {
   } else {
     try {
       const response = await AppStore.Login(ValueForm)
+      console.log(response)
       ToastStore.ToastAdd(response.message, 'success')
-      AppStore.user = response.user
-      localStorage.setItem('token', response.token)
+      const role = AppStore.user.role
+      if(role === 'admin'){
+        router.push({name:'admin-dashboard'})
+      }else if(role === 'staff'){
+        router.push({name:'staff-dashboard'})
+      }else if(role === 'user'){
+        router.push({name:'user-dashboard'})
+      }else{
+        ToastStore.ToastAdd('บัญชีของคุณมีปัญหากรุณาแจ้งแอดมิน','error')
+      }
     } catch (error) {
       if (error.response?.data?.Validator_error) {
         error.response.data.Validator_error.map((e) => ToastStore.ToastAdd(e.msg, 'error'))

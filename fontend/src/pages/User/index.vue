@@ -26,7 +26,7 @@
                     <v-textarea class="mx-2" label="รายละเอียด" variant="outlined"></v-textarea>
                 </v-col>
                 <v-col cols="12">
-                    <v-file-input clearable="" label="รูปภาพประกอบ (ถ้ามี)" variant="outlined" class="mx-2"></v-file-input>
+                    <v-file-input clearable="" label="รูปภาพประกอบ (ถ้ามี)" variant="outlined" class="mx-2" accept="image/png, image/jpg, image/jpeg"></v-file-input>
                 </v-col>
             </v-row>
             <v-btn color="blue-darken-3 mx-2" variant="flat">
@@ -61,7 +61,7 @@
                     <div class="d-flex flex-column py-2 ga-1">
                         <div class="text-grey-darken-3 d-flex ga-1 text-subtitle-2">
                             <v-icon icon="mdi-account-hard-hat"></v-icon>
-                            <div class="">ผู้รับผิดชอบ: <B>Staff Ball</B></div>
+                            <div class="">ผู้รับผิดชอบ: <b>Staff Ball</b></div>
                         </div>
                         <div class="text-green-darken-1 d-flex ga-1 text-subtitle-2">
                             <v-icon icon="mdi-chat"></v-icon>
@@ -133,9 +133,9 @@
                 <div style="border: 1px #00800061 solid;border-radius: 10px;padding: 10px;  background: #00800014;color: green;">
                     <div class="d-flex ga-1">
                         <v-icon size="small" icon="mdi-check-circle"></v-icon>
-                        <B class="">
+                        <b class="">
                             การแก้ไข
-                        </B>
+                        </b>
                     </div>
                     <div class="">
                         Reset Access Point ให้แล้ว
@@ -159,7 +159,7 @@ definePage({
     name: 'user-dashboard',
     meta: {
         requiresAuth: true,
-        layout: 'UserLayout'
+        layout: 'AllLayout'
     }
 })
 
