@@ -20,8 +20,17 @@ export const useAppStore = defineStore('app', {
     },
     async Logout() {
       this.user = null,
-        localStorage.removeItem('token')
+      localStorage.removeItem('token')
       router.push({ name: 'login' })
+    },
+    async Profile(){
+      const response = await api.get('/profile')
+      this.user = response.data.user
+    },
+    async EditProfile(data){
+      const response = await api.put('/profile',data)
+      this.user = response.data.user
+      return response.data
     }
   }
 })

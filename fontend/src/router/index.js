@@ -34,13 +34,13 @@ router.isReady().then(() => {
 })
 
 import { getUserRole, isTokenExpired } from '@/utils/auth'
+import { useAppStore } from '@/stores/app'
 
 router.beforeEach((to, from, next) => {
-
   // ตรวจสอบว่าหน้านี้ต้องการ authentication หรือไม่
   if (to.meta.requiresAuth) {
     const token = localStorage.getItem('token')
-
+    const AppStore = useAppStore()
     if (!token) {
       // ถ้าไม่มี token ให้ redirect ไป login
       next({ name: 'login' })
@@ -76,6 +76,12 @@ router.beforeEach((to, from, next) => {
         next()
       }
     }
+
+    
+    if(AppStore.user === null || AppStore.user.length == 0){
+      AppStore.Profile()
+    }
+
   } else {
     next()
   }

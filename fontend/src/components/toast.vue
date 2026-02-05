@@ -1,6 +1,6 @@
 <style scoped> 
     .toast-custom{
-        position: absolute;
+        position: fixed;
         bottom: 5px;
         right:5px;
         z-index: 999999;
