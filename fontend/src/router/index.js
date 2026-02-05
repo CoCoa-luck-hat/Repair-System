@@ -33,9 +33,9 @@ router.isReady().then(() => {
   localStorage.removeItem('vuetify:dynamic-reload')
 })
 
-import { useAppStore } from '@/stores/app'
+import { getUserRole, isTokenExpired } from '@/utils/auth'
+
 router.beforeEach((to, from, next) => {
-  const appStore = useAppStore()
 
   // ตรวจสอบว่าหน้านี้ต้องการ authentication หรือไม่
   if (to.meta.requiresAuth) {
@@ -44,9 +44,37 @@ router.beforeEach((to, from, next) => {
     if (!token) {
       // ถ้าไม่มี token ให้ redirect ไป login
       next({ name: 'login' })
+    } else if (isTokenExpired(token)) {
+      // ถ้า token หมดอายุ ให้ redirect ไป login
+      localStorage.removeItem('token')
+      next({ name: 'login' })
     } else {
-      // ถ้ามี token ให้ผ่านไปได้
-      next()
+      // ตรวจสอบ role ถ้าหน้านี้กำหนด requiresRole ไว้
+      if (to.meta.requiresRole) {
+        const userRole = getUserRole(token)
+        console.log(userRole)
+        if (userRole !== to.meta.requiresRole) {
+          // ถ้า role ไม่ตรง ให้ redirect ไปหน้า dashboard ของ role ตัวเอง
+          const dashboardMap = {
+            'admin': 'admin-dashboard',
+            'staff': 'staff-dashboard',
+            'user': 'user-dashboard'
+          }
+
+          const targetDashboard = dashboardMap[userRole]
+          if (targetDashboard && to.name !== targetDashboard) {
+            next({ name: targetDashboard })
+          } else {
+            next()
+          }
+        } else {
+          // role ตรงกัน ให้ผ่านไปได้
+          next()
+        }
+      } else {
+        // ไม่มีการกำหนด requiresRole ให้ผ่านไปได้
+        next()
+      }
     }
   } else {
     next()

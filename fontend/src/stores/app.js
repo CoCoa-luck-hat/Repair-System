@@ -14,14 +14,14 @@ export const useAppStore = defineStore('app', {
     },
     async Login(data) {
       const response = await api.post('/login', data)
-      localStorage.setItem('tokon',response.data.token)
+      localStorage.setItem('token', response.data.token)
       this.user = response.data.user
       return response.data
     },
-    async Logout(){
+    async Logout() {
       this.user = null,
-      localStorage.removeItem('token')
-      router.push({name:'login'})
+        localStorage.removeItem('token')
+      router.push({ name: 'login' })
     }
   }
 })

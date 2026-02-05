@@ -35,7 +35,7 @@
                             <v-btn color="blue" width="100%" size="small" prepend-icon="mdi-hand-back-left">
                                 รับงานนี้</v-btn>
                         </div>
-                        
+
                     </div>
                 </div>
             </v-col>
@@ -52,7 +52,8 @@
                                 <div class="">
                                     กระดาษติดเครื่องปริ้น
                                 </div>
-                                <v-icon icon="mdi-tab-search" class="cursor-pointer" color="grey" @click="OpenDetailModal()"> </v-icon>
+                                <v-icon icon="mdi-tab-search" class="cursor-pointer" color="grey"
+                                    @click="OpenDetailModal()"> </v-icon>
                             </div>
                             <div class="text-subtitle-2 text-grey-darken-1">
                                 แจ้งโดย: User A | 2023-10-01 09:00
@@ -60,17 +61,18 @@
                             <div class="text-subtitle-2 font-weight-light text-grey-darken-4 py-1">
                                 Brother MFC-J200 ชั้น 2 กระดาษติดดึงไม่ออก
                             </div>
-                            <img src="https://placehold.co/600x400/e2e8f0/475569?text=Paper+Jam+Photo" class="w-100 mb-1"
-                                style="height: 80px; object-fit: cover;" alt="">
-                            <v-text-field density="compact" placeholder="ระบุวิธีแกไข" :rules="[(v) => !!v || 'กรุณากรอก']"
-                                prepend-inner-icon="mdi-pencil" variant="outlined"></v-text-field>
+                            <img src="https://placehold.co/600x400/e2e8f0/475569?text=Paper+Jam+Photo"
+                                class="w-100 mb-1" style="height: 80px; object-fit: cover;" alt="">
+                            <v-text-field density="compact" placeholder="ระบุวิธีแกไข"
+                                :rules="[(v) => !!v || 'กรุณากรอก']" prepend-inner-icon="mdi-pencil"
+                                variant="outlined"></v-text-field>
                             <v-btn color="green" width="100%" size="small" prepend-icon="mdi-check">
                                 ปิดงาน</v-btn>
                         </div>
                     </div>
                 </div>
             </v-col>
-            <v-col cols="12"> 
+            <v-col cols="12">
                 <div class="bg-white rounded-lg pa-5 elevation-3 h-100">
                     <div class="d-flex ga-1 text-h6 text-amber-darken-4">
                         <v-icon icon="mdi-bookmark-box"></v-icon>
@@ -78,8 +80,8 @@
                     </div>
                     <v-divider class="my-2"></v-divider>
                     <v-table>
-                        <thead >
-                            <tr >
+                        <thead>
+                            <tr>
                                 <th>
                                     ลำดับ
                                 </th>
@@ -120,7 +122,7 @@
                                     2023-10-05 11:00
                                 </td>
                                 <td>
-                                    <v-chip color="blue" prepend-icon="mdi-tab-search"> 
+                                    <v-chip color="blue" prepend-icon="mdi-tab-search">
                                         รายละเอียด
                                     </v-chip>
                                 </td>
@@ -180,7 +182,7 @@
                     </div>
                     <div class="pa-1  bg-grey-lighten-1 rounded border">
                         <img src="https://placehold.co/600x400/e2e8f0/475569?text=Paper+Jam+Photo" class="w-100 mb-1"
-                                    style=" object-fit: cover; max-height: 400px;" alt="">
+                            style=" object-fit: cover; max-height: 400px;" alt="">
                     </div>
                 </div>
                 <v-divider class="my-4"></v-divider>
@@ -199,7 +201,8 @@
                         <div class="">Staff Ball</div>
                     </div>
                 </div>
-                <div style="border: 1px #00800061 solid;border-radius: 10px;padding: 10px;  background: #00800014;color: green;">
+                <div
+                    style="border: 1px #00800061 solid;border-radius: 10px;padding: 10px;  background: #00800014;color: green;">
                     <div class="d-flex ga-1">
                         <v-icon size="small" icon="mdi-check-circle"></v-icon>
                         <b class="">
@@ -210,7 +213,7 @@
                         Reset Access Point ให้แล้ว
                     </div>
                 </div>
-                <v-divider class="my-5"></v-divider>    
+                <v-divider class="my-5"></v-divider>
                 <div class="d-flex justify-end">
                     <v-btn variant="tonal" class="" @click="Detail = false">
                         ปิดหน้าต่าง
@@ -229,13 +232,14 @@ definePage({
     name: 'staff-dashboard',
     meta: {
         requiresAuth: true,
+        requiresRole: 'staff',
         layout: 'AllLayout'
     }
 })
 
 const Detail = ref(false)
 
-const OpenDetailModal = ()=>{
+const OpenDetailModal = () => {
     Detail.value = true
 }
 

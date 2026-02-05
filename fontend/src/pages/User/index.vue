@@ -26,7 +26,8 @@
                     <v-textarea class="mx-2" label="รายละเอียด" variant="outlined"></v-textarea>
                 </v-col>
                 <v-col cols="12">
-                    <v-file-input clearable="" label="รูปภาพประกอบ (ถ้ามี)" variant="outlined" class="mx-2" accept="image/png, image/jpg, image/jpeg"></v-file-input>
+                    <v-file-input clearable="" label="รูปภาพประกอบ (ถ้ามี)" variant="outlined" class="mx-2"
+                        accept="image/png, image/jpg, image/jpeg"></v-file-input>
                 </v-col>
             </v-row>
             <v-btn color="blue-darken-3 mx-2" variant="flat">
@@ -130,7 +131,8 @@
                         <div class="">Staff Ball</div>
                     </div>
                 </div>
-                <div style="border: 1px #00800061 solid;border-radius: 10px;padding: 10px;  background: #00800014;color: green;">
+                <div
+                    style="border: 1px #00800061 solid;border-radius: 10px;padding: 10px;  background: #00800014;color: green;">
                     <div class="d-flex ga-1">
                         <v-icon size="small" icon="mdi-check-circle"></v-icon>
                         <b class="">
@@ -141,7 +143,7 @@
                         Reset Access Point ให้แล้ว
                     </div>
                 </div>
-                <v-divider class="my-5"></v-divider>    
+                <v-divider class="my-5"></v-divider>
                 <div class="d-flex justify-end">
                     <v-btn variant="tonal" class="" @click="Detail = false">
                         ปิดหน้าต่าง
@@ -159,6 +161,7 @@ definePage({
     name: 'user-dashboard',
     meta: {
         requiresAuth: true,
+        requiresRole: 'user',
         layout: 'AllLayout'
     }
 })

@@ -49,7 +49,7 @@ router.post("/login", LoginValidator, async (req, res) => {
                 return res.status(200).json({
                     token: token,
                     user: row[0],
-                    message:'เข้าสู'
+                    message:'เข้าสู่ระบบสำเร็จ'
                 })
             } else {
                 return res.status(404).json({
